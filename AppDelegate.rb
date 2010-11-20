@@ -184,6 +184,10 @@ class AppDelegate
     self.instapaper.previous_story
   end
   
+  def updateNowPlayingWith(text)
+    self.now_playing_label.stringValue = text
+  end
+  
   # Web View Delegate Methods
   def webView(sender, didStartProvisionalLoadForFrame:frame)
     url_string = frame.provisionalDataSource.request.URL.absoluteString

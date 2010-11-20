@@ -178,10 +178,6 @@ class Instapaper
     self.current_speaker ? self.current_speaker.isSpeaking : false
   end
   
-  def current_title
-    self.current_story ? self.current_story.title : "Idle"
-  end
-  
 protected
   def collect_stories_from(page)
     page.scan(/<a.*?a>/im).select { |y| y =~ /tableViewCellTitleLink/ }.each do |raw_story|
@@ -200,5 +196,6 @@ protected
     self.current_speaker.startSpeakingString(story)
     
     self.parent.togglePlayPauseButtonImage
+    self.parent.updateNowPlayingWith(self.stories[self.current_story_index].title)
   end
 end
