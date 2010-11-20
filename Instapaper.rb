@@ -41,7 +41,9 @@ class Instapaper
     elsif (request.url.absoluteString == "http://www.instapaper.com/u" &&
             request.responseStatusCode == 200)
       NSLog("Fetched first page successfully")
-      collect_stories_from(request.responseString)
+
+      self.collect_stories_from(request.responseString)
+      self.set_stories_index_html
     end
   end
   
@@ -54,17 +56,70 @@ class Instapaper
     instapaper_cookies.size > 0
   end
   
+  def set_stories_index_html
+    page = """
+      <html>
+        <head>
+        <style type='text/css'>
+            #body {
+              width: 100%
+              background-color: #D2D2D2;
+            }
+            
+            .instapaper_story {
+              font:16px/1.5 Helvetica Neue,Arial,Helvetica,'Liberation Sans',FreeSans,sans-serif;
+              
+              padding-left: 0.5px;
+              padding-top: 5px;
+              padding-bottom: 5px;
+              position:relative;
+              margin-top: 10px;
+              
+              display: block;
+              
+              border-radius: 15px;
+              min-height: 20px;
+              color: #444444;
+              background-color: #F2F2F2;
+            }
+            
+            .instapaper_story:hover {
+              background-color: #4d7fe8;
+              cursor: pointer;
+              color: #ffffff;
+            }
+            
+            .instapaper_story p {
+              margin: 10px;
+            }
+            
+          </style>
+        </head>
+        
+        <body>
+          <div id='body'>
+            STORIES_BODY
+          </div>
+        </body>
+      </html>
+    """
+
+    stories_html = ""
+
+    self.stories.each_with_index do |story, index|
+      stories_html << "<div class='instapaper_story' onclick=\"location.href='http://paperadio.local/stories/#{index}'\"><p>#{story.title}</p></div>\n"
+    end
+    
+    page = page.gsub(/STORIES_BODY/, stories_html)
+    parent.web_view.mainFrame.loadHTMLString(page, baseURL:NSURL.URLWithString("http://paperadio.local"))
+  end
+  
 protected
   def collect_stories_from(page)
     page.scan(/<a.*?a>/im).select { |y| y =~ /tableViewCellTitleLink/ }.each do |raw_story|
       match = raw_story.match(/<a.*?href="(.*?)".*?>(.*?)<\/a>/im)
       self.stories << (story = Story.new(:url => match[1], :title => match[2]))
-      NSLog("Story: #{story.title} <#{story.url}>")
-#      match = raw_story.match(/<a.*?href="(.*?)".*?>(.*?)<\/a>/im)
-#      NSLog "Link: #{match[1]} Title: #{match[2]}"
     end
-    
-#    NSLog("Stories To Fetch: #{stories.count}")
   end
   
 end

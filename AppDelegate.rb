@@ -150,7 +150,6 @@ class AppDelegate
   end
 
   def hideCredentials(sender)
-    NSLog "Cancelled Instapaper credentials"
     NSApp.endSheet(credentials_window)
     credentials_window.orderOut(sender)
   end
