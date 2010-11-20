@@ -28,6 +28,10 @@
 		F4E3EE8312980A240005ECAD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4E3EE8212980A240005ECAD /* SystemConfiguration.framework */; };
 		F4E3EEC012980DD40005ECAD /* Story.rb in Resources */ = {isa = PBXBuildFile; fileRef = F4E3EEBF12980DD40005ECAD /* Story.rb */; };
 		F4E3EF1A12981E350005ECAD /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4E3EF1912981E350005ECAD /* WebKit.framework */; };
+		F4E3F118129843FE0005ECAD /* play_graphite.png in Resources */ = {isa = PBXBuildFile; fileRef = F4E3F117129843FE0005ECAD /* play_graphite.png */; };
+		F4E3F121129845DF0005ECAD /* pause_graphite.png in Resources */ = {isa = PBXBuildFile; fileRef = F4E3F120129845DF0005ECAD /* pause_graphite.png */; };
+		F4E3F126129846B20005ECAD /* next_graphite.png in Resources */ = {isa = PBXBuildFile; fileRef = F4E3F124129846B20005ECAD /* next_graphite.png */; };
+		F4E3F127129846B20005ECAD /* previous_graphite.png in Resources */ = {isa = PBXBuildFile; fileRef = F4E3F125129846B20005ECAD /* previous_graphite.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +72,10 @@
 		F4E3EE8212980A240005ECAD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
 		F4E3EEBF12980DD40005ECAD /* Story.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = Story.rb; sourceTree = "<group>"; };
 		F4E3EF1912981E350005ECAD /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
+		F4E3F117129843FE0005ECAD /* play_graphite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play_graphite.png; path = Images/play_graphite.png; sourceTree = "<group>"; };
+		F4E3F120129845DF0005ECAD /* pause_graphite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pause_graphite.png; path = Images/pause_graphite.png; sourceTree = "<group>"; };
+		F4E3F124129846B20005ECAD /* next_graphite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = next_graphite.png; path = Images/next_graphite.png; sourceTree = "<group>"; };
+		F4E3F125129846B20005ECAD /* previous_graphite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = previous_graphite.png; path = Images/previous_graphite.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +162,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F4E3F116129843F20005ECAD /* Images */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				CD68AC5911C9455700CF9405 /* MainMenu.xib */,
@@ -193,6 +202,17 @@
 				F4E3EE6C129809DB0005ECAD /* ASIProgressDelegate.h */,
 			);
 			name = ASIHTTP;
+			sourceTree = "<group>";
+		};
+		F4E3F116129843F20005ECAD /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				F4E3F124129846B20005ECAD /* next_graphite.png */,
+				F4E3F125129846B20005ECAD /* previous_graphite.png */,
+				F4E3F120129845DF0005ECAD /* pause_graphite.png */,
+				F4E3F117129843FE0005ECAD /* play_graphite.png */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -254,6 +274,10 @@
 				CD68AC5A11C9455700CF9405 /* MainMenu.xib in Resources */,
 				F4E3EB321297A5D60005ECAD /* Instapaper.rb in Resources */,
 				F4E3EEC012980DD40005ECAD /* Story.rb in Resources */,
+				F4E3F118129843FE0005ECAD /* play_graphite.png in Resources */,
+				F4E3F121129845DF0005ECAD /* pause_graphite.png in Resources */,
+				F4E3F126129846B20005ECAD /* next_graphite.png in Resources */,
+				F4E3F127129846B20005ECAD /* previous_graphite.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,6 +14,10 @@ class AppDelegate
   
   attr_accessor :username_field, :password_field
   attr_accessor :instapaper
+  attr_accessor :play_pause_button
+  attr_accessor :next_button
+  attr_accessor :prev_button
+  attr_accessor :now_playing_label
   
   # Returns the support folder for the application, used to store the Core Data
   # store file.  This code uses a folder named "Paperadio" for
@@ -162,7 +166,6 @@ class AppDelegate
       story_index = match[1].to_i
       story_to_get = self.instapaper.stories[story_index]
       
-      NSLog("A story was actually clicked: #{story_to_get.title} URL: #{story_to_get.url}")
       self.instapaper.get_individual_story_from(story_to_get.url)
     end
   end
