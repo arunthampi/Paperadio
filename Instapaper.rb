@@ -9,42 +9,38 @@ class Instapaper
   INSTAPAPER_URL = "http://www.instapaper.com/u"
   INSTAPAPER_LOGIN = "http://www.instapaper.com/user/login"
   
-  attr_accessor :connection
+  attr_accessor :stories
   
   def initialize
     super
+    self.stories = []
   end
   
   def login_with!(username, password)
-    url = NSURL.URLWithString(INSTAPAPER_LOGIN)
-    postData = "username=#{username}&password=#{password}".dataUsingEncoding(NSASCIIStringEncoding,
-                                                                             allowLossyConversion:true)
-    
-    request = NSMustableURLRequest.requestWithURL(url)
-    
-    request.setHTTPMethod("POST")
-    request.setValue("#{postData.length}", forHTTPHeaderField:"Content-Length")
-    request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField:"Content-Type")
-    request.setHTTPBody(postData)
-    
-    
-    self.connection = NSURLConnection.connectionWithRequest(request, delegate:self)
+    request = ASIFormDataRequest.requestWithURL(NSURL.URLWithString("http://www.instapaper.com/user/login"))
+    request.setPostValue(username, forKey:"username")
+    request.setPostValue(password, forKey:"password")
+
+    request.delegate = self
+    request.startAsynchronous
   end
   
-  def connection(connection, didReceiveResponse:response)
-    allCookies = NSHTTPCookie.cookiesWithResponseHeaderFields(response.allHeaderFields forURL:NSURL.URLWithString("http://www.instapaper.com"))
-    puts("Number of cookies received: #{allCookies.size}")
-    
-    # Store the cookies:
-    # NSHTTPCookieStorage is a Singleton.
-    NSHTTPCookieStorage.sharedHTTPCookieStorage.setCookies(all,
-                                                    forURL:NSURL.URLWithString("http://www.instapaper.com"),
-                                           mainDocumentURL:nil)
-#    [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookies:all forURL:[NSURL URLWithString:@"http://temp"] mainDocumentURL:nil];
+  def fetch_first_page
+    request = ASIHTTPRequest.requestWithURL(NSURL.URLWithString("http://www.instapaper.com/u"))
 
-    # Now we can print all of the cookies we have:
-    all.each do |cookie|
-      puts("Name: #{cookie.name} : Value: #{cookie.value}, Expires: #{cookie.expireData}")
+    request.delegate = self
+    request.startAsynchronous
+  end
+
+  def requestFinished(request)
+    if (request.url.absoluteString == "http://www.instapaper.com/user/login" &&
+        request.responseStatusCode == 200)
+      NSLog("Successfully logged in")
+      self.fetch_first_page
+    elsif (request.url.absoluteString == "http://www.instapaper.com/u" &&
+            request.responseStatusCode == 200)
+      NSLog("Fetched first page successfully")
+      collect_stories_from(request.responseString)
     end
   end
   
@@ -53,7 +49,21 @@ class Instapaper
   end
   
   def has_login_credentials_already?
+    instapaper_cookies = NSHTTPCookieStorage.sharedHTTPCookieStorage.cookiesForURL(NSURL.URLWithString("http://www.instapaper.com"))
+    instapaper_cookies.size > 0
+  end
   
+protected
+  def collect_stories_from(page)
+    page.scan(/<a.*?a>/im).select { |y| y =~ /tableViewCellTitleLink/ }.each do |raw_story|
+      match = raw_story.match(/<a.*?href="(.*?)".*?>(.*?)<\/a>/im)
+      self.stories << (story = Story.new(:url => match[1], :title => match[2]))
+      NSLog("Story: #{story.title} <#{story.url}>")
+#      match = raw_story.match(/<a.*?href="(.*?)".*?>(.*?)<\/a>/im)
+#      NSLog "Link: #{match[1]} Title: #{match[2]}"
+    end
+    
+#    NSLog("Stories To Fetch: #{stories.count}")
   end
   
 end

@@ -11,7 +11,7 @@ class AppDelegate
   
   attr_accessor :credentials_window
   attr_accessor :username_field, :password_field
-  attr_accessor :username, :password
+  attr_accessor :instapaper
   
   # Returns the support folder for the application, used to store the Core Data
   # store file.  This code uses a folder named "Paperadio" for
@@ -125,22 +125,25 @@ class AppDelegate
   
   # Application did Finish Launching
   def applicationDidFinishLaunching(notification)
-    NSApp.beginSheet(credentials_window,
-                    modalForWindow:window,
-                     modalDelegate:nil,
-                    didEndSelector:nil,
-                       contextInfo:nil)
+    self.instapaper = Instapaper.new
+    
+    unless instapaper.has_login_credentials_already?
+      NSApp.beginSheet(credentials_window,
+                      modalForWindow:window,
+                       modalDelegate:nil,
+                      didEndSelector:nil,
+                         contextInfo:nil)
+    else
+      instapaper.fetch_first_page
+    end
   end
   
   def submitCredentials(sender)
-    self.username = username_field.stringValue
-    self.password = password_field.stringValue
-    
     NSApp.endSheet(credentials_window)
     credentials_window.orderOut(sender)
     
-    NSLog "I have a #{username} as a username"
-    NSLog "I have a password length of #{password.length}"
+    self.instapaper.login_with!(username_field.stringValue,
+                                password_field.stringValue)
   end
 
   def hideCredentials(sender)
