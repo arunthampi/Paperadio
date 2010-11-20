@@ -10,6 +10,8 @@ class AppDelegate
   attr_accessor :window
   
   attr_accessor :credentials_window
+  attr_accessor :web_view
+  
   attr_accessor :username_field, :password_field
   attr_accessor :instapaper
   
@@ -126,6 +128,7 @@ class AppDelegate
   # Application did Finish Launching
   def applicationDidFinishLaunching(notification)
     self.instapaper = Instapaper.new
+    self.instapaper.parent = self
     
     unless instapaper.has_login_credentials_already?
       NSApp.beginSheet(credentials_window,

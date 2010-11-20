@@ -10,6 +10,7 @@ class Instapaper
   INSTAPAPER_LOGIN = "http://www.instapaper.com/user/login"
   
   attr_accessor :stories
+  attr_accessor :parent
   
   def initialize
     super
