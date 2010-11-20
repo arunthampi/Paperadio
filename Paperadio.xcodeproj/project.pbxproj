@@ -15,6 +15,7 @@
 		8F0C5D830EADC1EE007FBAA3 /* AppDelegate.rb in Resources */ = {isa = PBXBuildFile; fileRef = 8F0C5D820EADC1EE007FBAA3 /* AppDelegate.rb */; };
 		8F0C5D890EADC379007FBAA3 /* MacRubyApp.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 8F0C5D880EADC379007FBAA3 /* MacRubyApp.xcdatamodel */; };
 		CD68AC5A11C9455700CF9405 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD68AC5911C9455700CF9405 /* MainMenu.xib */; };
+		F4E3EB321297A5D60005ECAD /* Instapaper.rb in Resources */ = {isa = PBXBuildFile; fileRef = F4E3EB311297A5D60005ECAD /* Instapaper.rb */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		8F0C5D820EADC1EE007FBAA3 /* AppDelegate.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = AppDelegate.rb; sourceTree = "<group>"; };
 		8F0C5D880EADC379007FBAA3 /* MacRubyApp.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = MacRubyApp.xcdatamodel; sourceTree = "<group>"; };
 		CD65E1A611C941D600E46B3D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		F4E3EB311297A5D60005ECAD /* Instapaper.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = Instapaper.rb; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +51,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				F4E3EB311297A5D60005ECAD /* Instapaper.rb */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -148,6 +151,9 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "Deepcalm Apps";
+			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Paperadio" */;
 			compatibilityVersion = "Xcode 3.0";
 			developmentRegion = English;
@@ -176,6 +182,7 @@
 				4DE339F70D74FCDD00ADB6EE /* rb_main.rb in Resources */,
 				8F0C5D830EADC1EE007FBAA3 /* AppDelegate.rb in Resources */,
 				CD68AC5A11C9455700CF9405 /* MainMenu.xib in Resources */,
+				F4E3EB321297A5D60005ECAD /* Instapaper.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
