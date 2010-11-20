@@ -18,6 +18,7 @@ class AppDelegate
   attr_accessor :next_button
   attr_accessor :prev_button
   attr_accessor :now_playing_label
+  attr_accessor :activity_indicator
   
   # Returns the support folder for the application, used to store the Core Data
   # store file.  This code uses a folder named "Paperadio" for
