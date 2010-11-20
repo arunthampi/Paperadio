@@ -27,6 +27,8 @@ class Instapaper
 
     request.delegate = self
     request.startAsynchronous
+    
+    self.parent.activity_indicator.startAnimation(self)
   end
   
   def fetch_first_page
@@ -34,6 +36,8 @@ class Instapaper
 
     request.delegate = self
     request.startAsynchronous
+    
+    self.parent.activity_indicator.startAnimation(self)
   end
 
   def requestFinished(request)
@@ -57,6 +61,8 @@ class Instapaper
         NSLog("Got error code: #{request.responseStatusCode}")
       end
     end
+    
+    self.parent.activity_indicator.stopAnimation(self)
   end
   
   def logout!
@@ -131,6 +137,8 @@ class Instapaper
 
     request.delegate = self
     request.startAsynchronous
+    
+    self.parent.activity_indicator.startAnimation(self)
   end
   
   
