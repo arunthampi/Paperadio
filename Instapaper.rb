@@ -12,12 +12,16 @@ class Instapaper
   
   attr_accessor :stories
   attr_accessor :parent
-  attr_accessor :current_story
+  attr_accessor :current_story_text
+  attr_accessor :current_speaker
+  attr_accessor :current_story_index
   
   def initialize
     super
     self.stories = []
-    self.current_story = nil
+    self.current_story_text = nil
+    self.current_speaker = nil
+    self.current_story_index = 0
   end
   
   def login_with!(username, password)
@@ -54,9 +58,9 @@ class Instapaper
     elsif (request.url.absoluteString =~ /http:\/\/www\.instapaper\.com\/text/im)
       if request.responseStatusCode == 200
         # Strip out HTML
-        self.current_story = (request.responseString.match(/<div.*?story.*?>(.+)<\/div>\s+<div.*?bottom/im))[1].gsub(/<.*?>/, '')
-        NSLog("Going to read out story:\n#{self.current_story}")
-        self.parent.read_story(self.current_story)
+        self.current_story_text = (request.responseString.match(/<div.*?story.*?>(.+)<\/div>\s+<div.*?bottom/im))[1].gsub(/<.*?>/, '')
+        NSLog("Going to read out story:\n#{self.current_story_text}")
+        self.read_story(self.current_story_text)
       else
         NSLog("Got error code: #{request.responseStatusCode}")
       end
@@ -132,7 +136,13 @@ class Instapaper
     parent.web_view.mainFrame.loadHTMLString(page, baseURL:NSURL.URLWithString("http://paperadio.local"))
   end
   
-  def get_individual_story_from(url)
+  def get_individual_story_from(url_or_index)
+    url = if (url_or_index.is_a?(Fixnum))
+      self.stories[url_or_index.to_i].url
+    else
+      url_or_index
+    end
+  
     request = ASIHTTPRequest.requestWithURL(NSURL.URLWithString("http://www.instapaper.com/text?u=#{CGI.escape(url)}"))
 
     request.delegate = self
@@ -141,6 +151,36 @@ class Instapaper
     self.parent.activity_indicator.startAnimation(self)
   end
   
+  def toggle_play_pause
+    if self.current_speaker
+      if self.current_speaker.isSpeaking
+        # enum NSSpeechWordBoundary
+        self.current_speaker.pauseSpeakingAtBoundary(1)
+      else
+        self.current_speaker.continueSpeaking
+      end
+    else
+      self.get_individual_story_from(0)
+    end
+  end
+  
+  def next_story
+    self.current_story_index = (self.current_story_index + 1) % self.stories.count
+    self.get_individual_story_from(self.current_story_index)
+  end
+  
+  def previous_story
+    self.current_story_index = (self.current_story_index == 0) ? self.stories.count - 1 : self.current_story_index - 1
+    self.get_individual_story_from(self.current_story_index)
+  end
+  
+  def is_speaking?
+    self.current_speaker ? self.current_speaker.isSpeaking : false
+  end
+  
+  def current_title
+    self.current_story ? self.current_story.title : "Idle"
+  end
   
 protected
   def collect_stories_from(page)
@@ -150,4 +190,15 @@ protected
     end
   end
   
+  def read_story(story)
+    if self.current_speaker
+      self.current_speaker.stopSpeaking if self.current_speaker.isSpeaking
+      self.current_speaker = nil
+    end
+    
+    self.current_speaker = NSSpeechSynthesizer.alloc.initWithVoice(NSSpeechSynthesizer.defaultVoice)
+    self.current_speaker.startSpeakingString(story)
+    
+    self.parent.togglePlayPauseButtonImage
+  end
 end

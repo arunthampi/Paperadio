@@ -21,7 +21,6 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="368"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1335,6 +1334,7 @@
 							</object>
 							<string key="NSFrame">{{0, 26}, {406, 564}}</string>
 							<reference key="NSSuperview" ref="414427165"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView"/>
 							<string key="FrameName"/>
 							<string key="GroupName"/>
@@ -1364,6 +1364,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{38, 586}, {64, 69}}</string>
 							<reference key="NSSuperview" ref="414427165"/>
+							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="319501335">
 								<int key="NSCellFlags">67239424</int>
@@ -1392,6 +1393,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{93, 601}, {45, 38}}</string>
 							<reference key="NSSuperview" ref="414427165"/>
+							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="307799517">
 								<int key="NSCellFlags">67239424</int>
@@ -1416,6 +1418,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{3, 601}, {45, 38}}</string>
 							<reference key="NSSuperview" ref="414427165"/>
+							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="806163405">
 								<int key="NSCellFlags">67239424</int>
@@ -1450,10 +1453,11 @@
 											<int key="NSvFlags">268</int>
 											<string key="NSFrame">{{7, 11}, {231, 17}}</string>
 											<reference key="NSSuperview" ref="980475087"/>
+											<reference key="NSWindow"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="944860229">
-												<int key="NSCellFlags">68288064</int>
-												<int key="NSCellFlags2">272630784</int>
+												<int key="NSCellFlags">67239488</int>
+												<int key="NSCellFlags2">272631808</int>
 												<string key="NSContents">Idle</string>
 												<object class="NSFont" key="NSSupport" id="667044057">
 													<string key="NSName">LucidaGrande</string>
@@ -1484,10 +1488,12 @@
 									</object>
 									<string key="NSFrame">{{1, 1}, {253, 36}}</string>
 									<reference key="NSSuperview" ref="872240275"/>
+									<reference key="NSWindow"/>
 								</object>
 							</object>
 							<string key="NSFrame">{{141, 600}, {255, 52}}</string>
 							<reference key="NSSuperview" ref="414427165"/>
+							<reference key="NSWindow"/>
 							<string key="NSOffsets">{0, 0}</string>
 							<object class="NSTextFieldCell" key="NSTitleCell">
 								<int key="NSCellFlags">67239424</int>
@@ -1528,12 +1534,14 @@
 							<object class="NSPSMatrix" key="NSDrawMatrix"/>
 							<string key="NSFrame">{{384, 4}, {16, 16}}</string>
 							<reference key="NSSuperview" ref="414427165"/>
+							<reference key="NSWindow"/>
 							<int key="NSpiFlags">28938</int>
 							<double key="NSMaxValue">100</double>
 						</object>
 					</object>
 					<string key="NSFrameSize">{406, 644}</string>
 					<reference key="NSSuperview"/>
+					<reference key="NSWindow"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1680, 1028}}</string>
 				<string key="NSMinSize">{406, 666}</string>
@@ -2468,6 +2476,30 @@
 						<reference key="destination" ref="130339012"/>
 					</object>
 					<int key="connectionID">865</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">playPauseButtonPressed:</string>
+						<reference key="source" ref="32908450"/>
+						<reference key="destination" ref="658097619"/>
+					</object>
+					<int key="connectionID">866</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">nextStoryButtonPressed:</string>
+						<reference key="source" ref="32908450"/>
+						<reference key="destination" ref="676586227"/>
+					</object>
+					<int key="connectionID">867</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">previousStoryButtonPressed:</string>
+						<reference key="source" ref="32908450"/>
+						<reference key="destination" ref="702353506"/>
+					</object>
+					<int key="connectionID">868</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -4024,9 +4056,9 @@
 					<string>{{475, 832}, {234, 43}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{1402, 96}, {406, 644}}</string>
+					<string>{{1395, -5}, {406, 644}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{1402, 96}, {406, 644}}</string>
+					<string>{{1395, -5}, {406, 644}}</string>
 					<integer value="1"/>
 					<string>{{11, 666}, {480, 270}}</string>
 					<boolean value="YES"/>
@@ -4254,7 +4286,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">865</int>
+			<int key="maxID">868</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4268,11 +4300,17 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>applicationShouldTerminate:</string>
 							<string>hideCredentials:</string>
+							<string>nextStoryButtonPressed:</string>
+							<string>playPauseButtonPressed:</string>
+							<string>previousStoryButtonPressed:</string>
 							<string>saveAction:</string>
 							<string>submitCredentials:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -4285,6 +4323,9 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>applicationShouldTerminate:</string>
 							<string>hideCredentials:</string>
+							<string>nextStoryButtonPressed:</string>
+							<string>playPauseButtonPressed:</string>
+							<string>previousStoryButtonPressed:</string>
 							<string>saveAction:</string>
 							<string>submitCredentials:</string>
 						</object>
@@ -4296,6 +4337,18 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">hideCredentials:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">nextStoryButtonPressed:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">playPauseButtonPressed:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">previousStoryButtonPressed:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">

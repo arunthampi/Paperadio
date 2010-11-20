@@ -13,12 +13,13 @@ class AppDelegate
   attr_accessor :web_view
   
   attr_accessor :username_field, :password_field
-  attr_accessor :instapaper
   attr_accessor :play_pause_button
   attr_accessor :next_button
   attr_accessor :prev_button
   attr_accessor :now_playing_label
   attr_accessor :activity_indicator
+
+  attr_accessor :instapaper
   
   # Returns the support folder for the application, used to store the Core Data
   # store file.  This code uses a folder named "Paperadio" for
@@ -160,6 +161,29 @@ class AppDelegate
     credentials_window.orderOut(sender)
   end
   
+  # Audio Controls
+  def playPauseButtonPressed(sender)
+    self.instapaper.toggle_play_pause
+    self.togglePlayPauseButtonImage
+  end
+  
+  def togglePlayPauseButtonImage
+    if self.instapaper.is_speaking?
+      self.play_pause_button.image = NSImage.imageNamed("play_graphite")
+    else
+      self.play_pause_button.image = NSImage.imageNamed("pause_graphite")
+    end
+  end
+
+  
+  def nextStoryButtonPressed(sender)
+    self.instapaper.next_story
+  end
+
+  def previousStoryButtonPressed(sender)
+    self.instapaper.previous_story
+  end
+  
   # Web View Delegate Methods
   def webView(sender, didStartProvisionalLoadForFrame:frame)
     url_string = frame.provisionalDataSource.request.URL.absoluteString
@@ -171,9 +195,4 @@ class AppDelegate
     end
   end
   
-  def read_story(story)
-    speaker = NSSpeechSynthesizer.alloc.initWithVoice(NSSpeechSynthesizer.defaultVoice)
-    speaker.startSpeakingString(story)
-  end
-
 end
