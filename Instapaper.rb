@@ -4,6 +4,7 @@
 # Created by Arun Thampi on 11/20/10.
 # Copyright 2010 Deepcalm Apps. All rights reserved.
 
+require 'cgi'
 
 class Instapaper
   INSTAPAPER_URL = "http://www.instapaper.com/u"
@@ -11,10 +12,12 @@ class Instapaper
   
   attr_accessor :stories
   attr_accessor :parent
+  attr_accessor :current_story
   
   def initialize
     super
     self.stories = []
+    self.current_story = nil
   end
   
   def login_with!(username, password)
@@ -44,6 +47,15 @@ class Instapaper
 
       self.collect_stories_from(request.responseString)
       self.set_stories_index_html
+    elsif (request.url.absoluteString =~ /http:\/\/www\.instapaper\.com\/text/im)
+      if request.responseStatusCode == 200
+        # Strip out HTML
+        self.current_story = (request.responseString.match(/<div.*?story.*?>(.+)<\/div>\s+<div.*?bottom/im))[1].gsub(/<.*?>/, '')
+        NSLog("Going to read out story:\n#{self.current_story}")
+        self.parent.read_story(self.current_story)
+      else
+        NSLog("Got error code: #{request.responseStatusCode}")
+      end
     end
   end
   
@@ -113,6 +125,14 @@ class Instapaper
     page = page.gsub(/STORIES_BODY/, stories_html)
     parent.web_view.mainFrame.loadHTMLString(page, baseURL:NSURL.URLWithString("http://paperadio.local"))
   end
+  
+  def get_individual_story_from(url)
+    request = ASIHTTPRequest.requestWithURL(NSURL.URLWithString("http://www.instapaper.com/text?u=#{CGI.escape(url)}"))
+
+    request.delegate = self
+    request.startAsynchronous
+  end
+  
   
 protected
   def collect_stories_from(page)

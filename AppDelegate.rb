@@ -129,6 +129,7 @@ class AppDelegate
   def applicationDidFinishLaunching(notification)
     self.instapaper = Instapaper.new
     self.instapaper.parent = self
+    self.web_view.frameLoadDelegate = self
     
     unless instapaper.has_login_credentials_already?
       NSApp.beginSheet(credentials_window,
@@ -152,6 +153,23 @@ class AppDelegate
   def hideCredentials(sender)
     NSApp.endSheet(credentials_window)
     credentials_window.orderOut(sender)
+  end
+  
+  # Web View Delegate Methods
+  def webView(sender, didStartProvisionalLoadForFrame:frame)
+    url_string = frame.provisionalDataSource.request.URL.absoluteString
+    if(match = url_string.match(/stories\/(\d+)/im))
+      story_index = match[1].to_i
+      story_to_get = self.instapaper.stories[story_index]
+      
+      NSLog("A story was actually clicked: #{story_to_get.title} URL: #{story_to_get.url}")
+      self.instapaper.get_individual_story_from(story_to_get.url)
+    end
+  end
+  
+  def read_story(story)
+    speaker = NSSpeechSynthesizer.alloc.initWithVoice(NSSpeechSynthesizer.defaultVoice)
+    speaker.startSpeakingString(story)
   end
 
 end
