@@ -167,7 +167,7 @@ class AppDelegate
   end
   
   def togglePlayPauseButtonImage
-    if self.instapaper.is_speaking?
+    if self.instapaper.is_speaking
       self.play_pause_button.image = NSImage.imageNamed("pause_graphite")
     else
       self.play_pause_button.image = NSImage.imageNamed("play_graphite")

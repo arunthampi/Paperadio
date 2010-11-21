@@ -15,6 +15,7 @@ class Instapaper
   attr_accessor :current_story_text
   attr_accessor :current_speaker
   attr_accessor :current_story_index
+  attr_accessor :is_speaking
   
   def initialize
     super
@@ -156,6 +157,7 @@ class Instapaper
         self.current_speaker.continueSpeaking
       end
       
+      self.is_speaking = !self.is_speaking
       self.parent.togglePlayPauseButtonImage
     else
       self.get_individual_story_from(0)
@@ -170,10 +172,6 @@ class Instapaper
   def previous_story
     self.current_story_index = (self.current_story_index == 0) ? self.stories.count - 1 : self.current_story_index - 1
     self.get_individual_story_from(self.current_story_index)
-  end
-  
-  def is_speaking?
-    self.current_speaker ? self.current_speaker.isSpeaking : false
   end
   
 protected
@@ -193,6 +191,8 @@ protected
     self.current_speaker = NSSpeechSynthesizer.alloc.initWithVoice("com.apple.speech.synthesis.voice.Victoria")
     self.current_speaker.rate = 225.0
     self.current_speaker.startSpeakingString(story)
+
+    self.is_speaking = true
     
     self.parent.togglePlayPauseButtonImage
     self.parent.updateNowPlayingWith(self.stories[self.current_story_index].title)
