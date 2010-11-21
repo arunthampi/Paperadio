@@ -196,6 +196,7 @@ class AppDelegate
 
     if(match = url_string.match(/stories\/(\d+)/im))
       story_index = match[1].to_i
+      self.instapaper.toggle_play_pause
       self.instapaper.get_individual_story_from(story_index)
     end
   end
