@@ -136,15 +136,11 @@ class Instapaper
     parent.web_view.mainFrame.loadHTMLString(page, baseURL:NSURL.URLWithString("http://paperadio.local"))
   end
   
-  def get_individual_story_from(url_or_index)
-    url = if (url_or_index.is_a?(Fixnum))
-      self.stories[url_or_index.to_i].url
-    else
-      url_or_index
-    end
-  
-    request = ASIHTTPRequest.requestWithURL(NSURL.URLWithString("http://www.instapaper.com/text?u=#{CGI.escape(url)}"))
+  def get_individual_story_from(index)
+    self.current_story_index = index.to_i
+    url = self.stories[self.current_story_index].url
 
+    request = ASIHTTPRequest.requestWithURL(NSURL.URLWithString("http://www.instapaper.com/text?u=#{CGI.escape(url)}"))
     request.delegate = self
     request.startAsynchronous
     
@@ -155,10 +151,12 @@ class Instapaper
     if self.current_speaker
       if self.current_speaker.isSpeaking
         # enum NSSpeechWordBoundary
-        self.current_speaker.pauseSpeakingAtBoundary(1)
+        self.current_speaker.pauseSpeakingAtBoundary(0)
       else
         self.current_speaker.continueSpeaking
       end
+      
+      self.parent.togglePlayPauseButtonImage
     else
       self.get_individual_story_from(0)
     end
@@ -192,7 +190,8 @@ protected
       self.current_speaker = nil
     end
     
-    self.current_speaker = NSSpeechSynthesizer.alloc.initWithVoice(NSSpeechSynthesizer.defaultVoice)
+    self.current_speaker = NSSpeechSynthesizer.alloc.initWithVoice("com.apple.speech.synthesis.voice.Victoria")
+    self.current_speaker.rate = 225.0
     self.current_speaker.startSpeakingString(story)
     
     self.parent.togglePlayPauseButtonImage

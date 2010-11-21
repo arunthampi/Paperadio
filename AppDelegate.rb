@@ -164,14 +164,14 @@ class AppDelegate
   # Audio Controls
   def playPauseButtonPressed(sender)
     self.instapaper.toggle_play_pause
-    self.togglePlayPauseButtonImage
+#    self.togglePlayPauseButtonImage
   end
   
   def togglePlayPauseButtonImage
     if self.instapaper.is_speaking?
-      self.play_pause_button.image = NSImage.imageNamed("play_graphite")
-    else
       self.play_pause_button.image = NSImage.imageNamed("pause_graphite")
+    else
+      self.play_pause_button.image = NSImage.imageNamed("play_graphite")
     end
   end
 
@@ -191,11 +191,10 @@ class AppDelegate
   # Web View Delegate Methods
   def webView(sender, didStartProvisionalLoadForFrame:frame)
     url_string = frame.provisionalDataSource.request.URL.absoluteString
+
     if(match = url_string.match(/stories\/(\d+)/im))
       story_index = match[1].to_i
-      story_to_get = self.instapaper.stories[story_index]
-      
-      self.instapaper.get_individual_story_from(story_to_get.url)
+      self.instapaper.get_individual_story_from(story_index)
     end
   end
   
