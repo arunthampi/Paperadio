@@ -493,8 +493,8 @@ protected
     
     story = decode_html_entities(story)
     
-    self.current_speaker = NSSpeechSynthesizer.alloc.initWithVoice("com.apple.speech.synthesis.voice.Victoria")
-    self.current_speaker.rate = 210.0
+    self.current_speaker = NSSpeechSynthesizer.alloc.initWithVoice("com.apple.speech.synthesis.voice.Alex")
+    self.current_speaker.rate = 175.0
     self.current_speaker.startSpeakingString(story)
 
     self.is_speaking = true
