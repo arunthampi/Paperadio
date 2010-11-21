@@ -317,7 +317,6 @@ class Instapaper
       if request.responseStatusCode == 200
         # Strip out HTML
         self.current_story_text = (request.responseString.match(/<div.*?story.*?>(.+)<\/div>\s+<div.*?bottom/im))[1].gsub(/<.*?>/, '')
-        NSLog("Going to read out story:\n#{self.current_story_text}")
         self.read_story(self.current_story_text)
       else
         NSLog("Got error code: #{request.responseStatusCode}")
@@ -466,8 +465,6 @@ protected
     end
     
     story = decode_html_entities(story)
-    
-    NSLog("Story : #{story}")
     
     self.current_speaker = NSSpeechSynthesizer.alloc.initWithVoice("com.apple.speech.synthesis.voice.Victoria")
     self.current_speaker.rate = 210.0
