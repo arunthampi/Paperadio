@@ -318,6 +318,8 @@ class Instapaper
         # Strip out HTML
         self.current_story_text = (request.responseString.match(/<div.*?story.*?>(.+)<\/div>\s+<div.*?bottom/im))[1].gsub(/<.*?>/, '')
         self.read_story(self.current_story_text)
+        
+        cache_story!(request.url.absoluteString, self.current_story_text) 
       else
         NSLog("Got error code: #{request.responseStatusCode}")
       end
@@ -396,12 +398,18 @@ class Instapaper
   def get_individual_story_from(index)
     self.current_story_index = index.to_i
     url = self.stories[self.current_story_index].url
-
-    request = ASIHTTPRequest.requestWithURL(NSURL.URLWithString("http://www.instapaper.com/text?u=#{CGI.escape(url)}"))
-    request.delegate = self
-    request.startAsynchronous
     
-    self.parent.activity_indicator.startAnimation(self)
+    url_to_fetch_from = "http://www.instapaper.com/text?u=#{CGI.escape(url)}"
+
+    if (self.current_story_text = get_cached_story_for(url_to_fetch_from))
+      self.read_story(self.current_story_text)
+    else
+      request = ASIHTTPRequest.requestWithURL(NSURL.URLWithString(url_to_fetch_from))
+      request.delegate = self
+      request.startAsynchronous
+      
+      self.parent.activity_indicator.startAnimation(self)
+    end
   end
   
   def toggle_play_pause
@@ -438,7 +446,26 @@ class Instapaper
     }
   end
   
+  def cache_story!(url, story_text)
+    file_path = File.join(self.parent.applicationSupportFolder, "#{permalize(url)}.html")
+    File.open(file_path, 'w') { |f| f.puts(story_text) } if !File.exists?(file_path)
+  end
+  
+  def get_cached_story_for(url)
+    file_path = File.join(self.parent.applicationSupportFolder, "#{permalize(url)}.html")
+    File.exists?(file_path) ? File.read(file_path) : nil
+  end
+  
 protected
+  def permalize(s)
+    s = s.dup.gsub(/'/, '')
+    s.gsub!(/\W+|_/, ' ') # all non-word chars to spaces
+    s.strip!
+    s.downcase!
+    s.gsub!(/\ +/, '-') # spaces to dashes
+    s
+  end
+
   def named_entity_regexp
     key_lengths = MAPPINGS.keys.map{ |k| k.length }
     entity_name_pattern =
