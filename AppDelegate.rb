@@ -133,7 +133,9 @@ class AppDelegate
   
   # Application did Finish Launching
   def applicationDidFinishLaunching(notification)
+    NSLog "Going to initialize Instapaper"
     self.instapaper = Instapaper.new
+    NSLog "initialized Instapaper"
     self.instapaper.parent = self
     self.web_view.frameLoadDelegate = self
     
@@ -144,6 +146,7 @@ class AppDelegate
                       didEndSelector:nil,
                          contextInfo:nil)
     else
+      NSLog "Going to fetch first page"
       instapaper.fetch_first_page
     end
   end
