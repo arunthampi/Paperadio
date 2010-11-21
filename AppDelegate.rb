@@ -164,7 +164,6 @@ class AppDelegate
   # Audio Controls
   def playPauseButtonPressed(sender)
     self.instapaper.toggle_play_pause
-#    self.togglePlayPauseButtonImage
   end
   
   def togglePlayPauseButtonImage
