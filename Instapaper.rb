@@ -458,7 +458,7 @@ class Instapaper
   
 protected
   def permalize(s)
-    s = s.dup.gsub(/'/, '')
+    s = s.dup.gsub("'", '')
     s.gsub!(/\W+|_/, ' ') # all non-word chars to spaces
     s.strip!
     s.downcase!
