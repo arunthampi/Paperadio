@@ -174,7 +174,6 @@ class AppDelegate
       self.play_pause_button.image = NSImage.imageNamed("play_graphite")
     end
   end
-
   
   def nextStoryButtonPressed(sender)
     self.instapaper.next_story
