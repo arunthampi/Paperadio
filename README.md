@@ -21,3 +21,6 @@ TODO
 1. Optimizations
 2. Better Error Handling
 3. Great Icon!
+
+Released under the [MIT license](http://www.opensource.org/licenses/mit-license.php).
+<http://github.com/heroku/heroku>
